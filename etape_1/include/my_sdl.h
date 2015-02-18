@@ -1,0 +1,80 @@
+/*
+** my_sdl.h for sudoki-bi in /u/all/cerisi_m/cu/rendu/svn/rushmv/etape_1
+** 
+** Made by mickael cerisier
+** Login   <cerisi_m@epitech.net>
+** 
+** Started on  Sun Apr 25 12:05:59 2010 mickael cerisier
+** Last update Sun Apr 25 12:06:00 2010 mickael cerisier
+*/
+
+#ifndef		_MY_SDL_H_
+# define	_MY_SDL_H_
+
+# define	WINX 800
+# define	WINY 850
+# define	BPP 32
+# define	SIZE_BLOCK 89
+
+typedef struct	s_info
+{
+  SDL_Surface	*screen;
+  SDL_Surface	*bg;
+  TTF_Font	*police;
+  TTF_Font	*timer_font;
+  SDL_Color     color;
+  SDL_TimerID   timer_id;
+  SDL_mutex     *lock;
+  int		move;
+  int		time;
+  int		sdl;
+  int		manual;
+}		t_info;
+
+typedef struct	s_event
+{
+  char		nb;
+  int		lock;
+  SDL_Rect	pos;
+  int		tab[9][9];
+}		t_event;
+
+/* aff_nbr.c */
+void		clean_nbr(int x, int y, t_info *info);
+void		aff_nbr(int x, int y, char nb, t_info *info);
+void		write_number(int tab[9][9], t_info *info);
+
+/* backtracking.c */
+int		backtracking(int tab[9][9], t_info *info);
+
+/* handle_events.c */
+void		handle_events(t_info *info, int tab[9][9]);
+
+/* init_sdl.c */
+void		init_sdl(t_info *info, int tab[9][9], char *path);
+
+/* timer.c */
+Uint32		timer_func(Uint32 interv, void *arg);
+void		aff_move(t_info *info);
+
+/* xsdl.c */
+SDL_Surface	*ximg_load(char *path);
+TTF_Font	*xttf_openfont(char *path, int size);
+int		xsdl_blitsurface(SDL_Surface *src, SDL_Rect *srcrect,
+                                 SDL_Surface *dst, SDL_Rect *dstrect);
+SDL_Surface	*xttf_rendertext_blended(TTF_Font *font, const char *text,
+                                         SDL_Color fg);
+int		xsdl_flip(SDL_Surface *screen);
+
+/* xsdl_mutex.c */
+int		xsdl_mutexp(SDL_mutex *mutex);
+int		xsdl_mutexv(SDL_mutex *mutex);
+
+/* xinti.c */
+SDL_Surface	*xsdl_setvideomode(int w, int h, int bpp, Uint32 flags);
+int		xsdl_init(Uint32 flags);
+int		xttf_init(void);
+SDL_TimerID	xsdl_addtimer(Uint32 interval, SDL_NewTimerCallback cb,
+			      void* param);
+
+#endif		/* _MY_SDL_H_ */

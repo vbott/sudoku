@@ -1,0 +1,31 @@
+#ifndef		_MY_SDL_H_
+# define	_MY_SDL_H_
+
+# define	WINX 800
+# define	WINY 800
+# define	BPP 32
+# define	SIZE_BLOCK 89
+
+typedef struct	s_info
+{
+  SDL_Surface	*screen;
+  SDL_Surface	*bg;
+  SDL_Surface	*text;
+  TTF_Font	*police;
+  SDL_Color     color;
+  int		sdl;
+  int		manual;
+}		t_info;
+
+typedef struct	s_event
+{
+  char		nb;
+  int		lock;
+  SDL_Rect	pos;
+  int		tab[9][9];
+}		t_event;
+
+/* backtracking.c */
+int	backtracking(int tab[9][9], t_info *info);
+
+#endif		/* _MY_SDL_H_ */
